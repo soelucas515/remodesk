@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Remodesk</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- Tu código React irá aquí -->
+  <script type="text/babel">
+    function App() {
+      const [users, setUsers] = React.useState([])
+
+      React.useEffect(() => {
+        fetch("http://localhost:3001/api/users")
+          .then(res => res.json())
+          .then(data => setUsers(data))
+      }, [])
+
+      return (
+        <div>
+          <h1>Gestión de Usuarios</h1>
+          <ul>
+            {users.map(u => (
+              <li key={u._id}>{u.name} - {u.email}</li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />)
+  </script>
+</body>
+</html>
